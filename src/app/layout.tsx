@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Artifolio | Creative Portfolio",
+  title: "Tora Blaze | Creative Portfolio",
   description: "A sleek, personal portfolio landing page to showcase creative work.",
 };
 
