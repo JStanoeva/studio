@@ -1,47 +1,13 @@
-import { prioritizeProjects } from "@/ai/flows/prioritize-projects";
 import { generateImage } from "@/ai/flows/generate-image-flow";
 import { projects as allProjects, Project } from "@/lib/data";
 import ProjectCard from "@/components/project-card";
 
-async function getPrioritizedProjects(): Promise<Project[]> {
-  const projectEngagementData = allProjects.map(
-    ({ projectId, viewCount, interactionCount }) => ({
-      projectId,
-      viewCount,
-      interactionCount,
-    })
-  );
-
-  try {
-    const result = await prioritizeProjects({
-      projectEngagementData,
-    });
-    
-    if (result && result.prioritizedProjectIds && result.prioritizedProjectIds.length > 0) {
-      const { prioritizedProjectIds } = result;
-      const projectMap = new Map(allProjects.map((p) => [p.projectId, p]));
-      const prioritized = prioritizedProjectIds
-        .map((id) => projectMap.get(id)!)
-        .filter(Boolean);
-      
-      const remaining = allProjects.filter(p => !prioritizedProjectIds.includes(p.projectId));
-      
-      return [...prioritized, ...remaining];
-    }
-    // If AI returns no data, we'll fall through to the catch block and use default sorting.
-  } catch (error) {
-    console.error("Failed to prioritize projects with AI, falling back to default sorting:", error);
-    // Fallback to a simple sorting mechanism if AI fails
+function getSortedProjects(): Project[] {
+    // Fallback to a simple sorting mechanism
     return [...allProjects].sort(
       (a, b) =>
         (b.viewCount + b.interactionCount * 5) - (a.viewCount + a.interactionCount * 5)
     );
-  }
-  // Default fallback if try block completes but doesn't return
-  return [...allProjects].sort(
-    (a, b) =>
-      (b.viewCount + b.interactionCount * 5) - (a.viewCount + a.interactionCount * 5)
-  );
 }
 
 async function getProjectsWithGeneratedImages(projects: Project[]): Promise<Project[]> {
@@ -57,7 +23,7 @@ async function getProjectsWithGeneratedImages(projects: Project[]): Promise<Proj
 }
 
 export default async function Projects() {
-  const sortedProjects = await getPrioritizedProjects();
+  const sortedProjects = getSortedProjects();
   const projectsWithImages = await getProjectsWithGeneratedImages(sortedProjects);
 
   return (
