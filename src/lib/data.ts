@@ -59,7 +59,7 @@ export const projects: Project[] = [
     id: 4,
     projectId: 'project-d',
     title: 'AI-Powered Chatbot',
-    description: 'A customer service chatbot using natural language processing.',
+    description: 'A helpful assistant for customer service, using language processing.',
     longDescription: 'Created an intelligent chatbot for a client\'s website to handle customer queries 24/7. The chatbot was built using Google\'s Dialogflow and integrated with a custom backend to fetch information from the company\'s knowledge base.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'robot conversation',
