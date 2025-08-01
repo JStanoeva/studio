@@ -35,7 +35,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               alt={project.title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
-              data-ai-hint={project.imageHint}
             />
           </div>
           <CardHeader>
@@ -57,7 +56,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </DialogHeader>
         <div className="flex-1 overflow-y-auto pr-4 -mr-4 grid md:grid-cols-2 gap-8 py-4">
             <div className="relative aspect-video rounded-lg overflow-hidden">
-                <Image src={project.imageUrl} alt={project.title} fill className="object-cover" data-ai-hint={project.imageHint} />
+                <Image src={project.imageUrl} alt={project.title} fill className="object-cover" />
             </div>
             <div className="flex flex-col">
                 <h3 className="text-xl font-semibold mb-2 text-primary">About this project</h3>
