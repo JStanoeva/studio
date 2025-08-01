@@ -28,7 +28,7 @@ async function getPrioritizedProjects(): Promise<Project[]> {
       
       return [...prioritized, ...remaining];
     }
-    throw new Error('AI prioritization returned empty or invalid data.');
+    // If AI returns no data, we'll fall through to the catch block and use default sorting.
   } catch (error) {
     console.error("Failed to prioritize projects with AI, falling back to default sorting:", error);
     // Fallback to a simple sorting mechanism if AI fails
@@ -37,6 +37,11 @@ async function getPrioritizedProjects(): Promise<Project[]> {
         (b.viewCount + b.interactionCount * 5) - (a.viewCount + a.interactionCount * 5)
     );
   }
+  // Default fallback if try block completes but doesn't return
+  return [...allProjects].sort(
+    (a, b) =>
+      (b.viewCount + b.interactionCount * 5) - (a.viewCount + a.interactionCount * 5)
+  );
 }
 
 async function getProjectsWithGeneratedImages(projects: Project[]): Promise<Project[]> {
