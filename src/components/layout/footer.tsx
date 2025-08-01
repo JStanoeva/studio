@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-secondary-foreground/80 mb-4 md:mb-0">
-            &copy; {year} Tora Blaze. All Rights Reserved.
+            &copy; {year} Artifolio. All Rights Reserved.
           </p>
           <div className="flex items-center space-x-2">
             <Button variant="ghost" size="icon" asChild>

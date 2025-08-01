@@ -13,23 +13,28 @@ async function getPrioritizedProjects(): Promise<Project[]> {
   );
 
   try {
-    const { prioritizedProjectIds } = await prioritizeProjects({
+    const result = await prioritizeProjects({
       projectEngagementData,
     });
-    const projectMap = new Map(allProjects.map((p) => [p.projectId, p]));
-    const prioritized = prioritizedProjectIds
-      .map((id) => projectMap.get(id)!)
-      .filter(Boolean);
     
-    const remaining = allProjects.filter(p => !prioritizedProjectIds.includes(p.projectId));
-    
-    return [...prioritized, ...remaining];
+    if (result && result.prioritizedProjectIds && result.prioritizedProjectIds.length > 0) {
+      const { prioritizedProjectIds } = result;
+      const projectMap = new Map(allProjects.map((p) => [p.projectId, p]));
+      const prioritized = prioritizedProjectIds
+        .map((id) => projectMap.get(id)!)
+        .filter(Boolean);
+      
+      const remaining = allProjects.filter(p => !prioritizedProjectIds.includes(p.projectId));
+      
+      return [...prioritized, ...remaining];
+    }
+    throw new Error('AI prioritization returned empty or invalid data.');
   } catch (error) {
-    console.error("Failed to prioritize projects with AI:", error);
+    console.error("Failed to prioritize projects with AI, falling back to default sorting:", error);
     // Fallback to a simple sorting mechanism if AI fails
     return [...allProjects].sort(
       (a, b) =>
-        b.viewCount + b.interactionCount * 5 - (a.viewCount + a.interactionCount * 5)
+        (b.viewCount + b.interactionCount * 5) - (a.viewCount + a.interactionCount * 5)
     );
   }
 }

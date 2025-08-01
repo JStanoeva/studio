@@ -31,7 +31,7 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <a href="#" className="text-2xl font-bold text-primary">
-            Tora Blaze
+            Artifolio
           </a>
           <nav className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
