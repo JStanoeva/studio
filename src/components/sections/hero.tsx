@@ -5,7 +5,7 @@ import { ArrowDown } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="bg-primary text-primary-foreground py-24 sm:py-32">
+    <section className="bg-primary text-primary-foreground py-24 sm:py-32 animated-gradient">
       <div className="container mx-auto px-4 text-center">
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tighter mb-4 animate-fade-in-up">
           Creative Developer & Designer

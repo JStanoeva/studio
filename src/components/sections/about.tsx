@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import { useInView } from "@/hooks/use-in-view";
 
 const skills = [
   "React",
@@ -15,8 +18,10 @@ const skills = [
 ];
 
 export default function About() {
+  const [ref, isInView] = useInView<HTMLElement>();
+
   return (
-    <section id="about" className="py-20 sm:py-28 bg-secondary">
+    <section id="about" ref={ref} className={`py-20 sm:py-28 bg-secondary fade-in-on-scroll ${isInView ? 'is-visible' : ''}`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">About Me</h2>

@@ -1,7 +1,11 @@
-import { projects as allProjects, Project } from "@/lib/data";
+"use client";
+
+import { projects as allProjects } from "@/lib/data";
 import ProjectCard from "@/components/project-card";
+import { useInView } from "@/hooks/use-in-view";
 
 export default function Projects() {
+  const [ref, isInView] = useInView<HTMLElement>();
   // Simple sort as a fallback
   const sortedProjects = [...allProjects].sort(
     (a, b) =>
@@ -9,7 +13,7 @@ export default function Projects() {
   );
 
   return (
-    <section id="projects" className="py-20 sm:py-28 bg-background">
+    <section id="projects" ref={ref} className={`py-20 sm:py-28 bg-background fade-in-on-scroll ${isInView ? 'is-visible' : ''}`}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">
@@ -20,8 +24,10 @@ export default function Projects() {
           </p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+          {sortedProjects.map((project, index) => (
+             <div key={project.id} style={{ transitionDelay: `${index * 150}ms` }} className={`fade-in-on-scroll ${isInView ? 'is-visible' : ''}`}>
+                <ProjectCard project={project} />
+             </div>
           ))}
         </div>
       </div>
